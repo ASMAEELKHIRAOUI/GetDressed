@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Optional<List<Product>> getByName(String name) {
-        return productRepository.findAllByName();
+        return productRepository.findAllByName(name);
     }
 
     @Override
