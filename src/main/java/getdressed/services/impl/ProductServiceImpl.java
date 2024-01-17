@@ -2,6 +2,7 @@ package getdressed.services.impl;
 
 import getdressed.domain.Product;
 import getdressed.repositories.ProductRepository;
+import getdressed.services.CategoryService;
 import getdressed.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,11 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryService categoryService;
 
     @Override
     public Product save(Product product) {
+        product.setCategory(categoryService.getByName(product.getCategory().getName()).orElse(null));
         return productRepository.save(product);
     }
 

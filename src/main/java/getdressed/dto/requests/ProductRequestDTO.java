@@ -10,16 +10,18 @@ public record ProductRequestDTO(
          Integer stock,
          Integer promotion,
          String image,
-         Category category
+         String category
 ) {
     public Product toProduct(){
-        return Product.builder()
+        Product.ProductBuilder productBuilder = new Product().builder()
                 .name(name)
                 .description(description)
                 .price(price)
                 .stock(stock)
-                .promotion(promotion)
-                .category(category)
-                .build();
+                .promotion(promotion);
+        if(category != null) {
+            productBuilder.category(Category.builder().name(category).build());
+        }
+        return productBuilder.build();
     }
 }
