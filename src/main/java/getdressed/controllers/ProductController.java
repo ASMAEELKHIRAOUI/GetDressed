@@ -9,6 +9,7 @@ import getdressed.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,16 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_sbahlkhir')")
     public ResponseEntity<List<ProductResponseDTO>> getAll(){
+        List<Product> products = productService.getAll();
+        if (products.isEmpty()) return ResponseEntity.badRequest().build();
+        else return new ResponseEntity<>(products.stream().map(ProductResponseDTO::fromProduct).toList(), HttpStatus.OK);
+    }
+
+    @GetMapping("/f")
+    @PreAuthorize("hasRole('ROLE_sbahlkhr')")
+    public ResponseEntity<List<ProductResponseDTO>> getAlll(){
         List<Product> products = productService.getAll();
         if (products.isEmpty()) return ResponseEntity.badRequest().build();
         else return new ResponseEntity<>(products.stream().map(ProductResponseDTO::fromProduct).toList(), HttpStatus.OK);
