@@ -7,6 +7,7 @@ import getdressed.services.CartService;
 import getdressed.services.ProductService;
 import getdressed.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart save(Cart cart) {
-        cart.setUser(userService.getById(cart.getUser().getId()).orElse(null));
+        cart.setUser(userService.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null));
         cart.setProduct(productService.getById(cart.getProduct().getId()).orElse(null));
         return cartRepository.save(cart);
     }

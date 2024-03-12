@@ -14,6 +14,8 @@ public interface UserService {
 
     Optional<User> getById(Long id);
 
+    Optional<User> getByEmail(String email);
+
     User assignRole(Long id, Role role);
 
     User update(User user, Long id);

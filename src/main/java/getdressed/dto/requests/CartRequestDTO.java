@@ -7,16 +7,12 @@ import getdressed.domain.User;
 
 public record CartRequestDTO(
         Integer quantity,
-        Long product,
-        Long user
+        Long product
 ) {
     public Cart toCart(){
         Cart.CartBuilder cartBuilder = new Cart().builder().quantity(quantity);
         if (product != null){
             cartBuilder.product(Product.builder().id(product).build());
-        }
-        if (user != null){
-            cartBuilder.user(User.builder().id(user).build());
         }
         return cartBuilder.build();
     }
