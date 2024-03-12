@@ -1,5 +1,5 @@
 package getdressed.domain.enums;
 
 public enum Status {
-    TODO, IN_PROGRESS, DONE, UNDONE
+    PENDING, READY_FOR_DISPATCH, DISPATCHED, DELIVERED, RETURNED
 }
