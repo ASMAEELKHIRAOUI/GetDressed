@@ -15,15 +15,11 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Optional<Order> getOrderById(Long id);
 
-    Optional<List<Order>> getOrderByEmail(String email);
-
-    Optional<List<Order>> getOrderByPhone(String phone);
     @Query("SELECT o FROM Order o WHERE o.fullName LIKE concat('%', :searchTerm, '%')" +
                     " OR o.zipcode LIKE concat('%', :searchTerm, '%')" +
                     " OR o.phone LIKE concat('%', :searchTerm, '%')" +
                     " OR o.email LIKE concat('%', :searchTerm, '%')")
     Optional<List<Order>> findByFullNameOrZipcodeOrPhoneOrEmail(String searchTerm);
-
 
     Optional<List<Order>> findAllByStatus(Status status);
 
