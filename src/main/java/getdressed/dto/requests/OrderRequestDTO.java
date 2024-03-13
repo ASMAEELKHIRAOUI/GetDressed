@@ -8,7 +8,7 @@ public record OrderRequestDTO(
         String fullName,
         String email,
         String phone,
-        Integer zipcode,
+        String zipcode,
         Status status
 ) {
     public Order toOrder(){

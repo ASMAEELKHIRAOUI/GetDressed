@@ -2,16 +2,15 @@ package getdressed.domain;
 
 import getdressed.domain.enums.Status;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -24,7 +23,7 @@ public class Order {
 
     private String phone;
 
-    private Integer zipcode;
+    private String zipcode;
 
     @Enumerated(EnumType.STRING)
     private Status status;

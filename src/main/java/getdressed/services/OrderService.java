@@ -1,6 +1,7 @@
 package getdressed.services;
 
 import getdressed.domain.Order;
+import getdressed.domain.enums.Status;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,9 +15,9 @@ public interface OrderService {
 
     Optional<Order> getById(Long id);
 
-    Optional<List<Order>> getByEmail(String email);
+    Optional<List<Order>> getByFullNameOrZipcodeOrPhoneOrEmail(String searchTerm);
 
-    Optional<List<Order>> getByPhone(String phone);
+    Optional<List<Order>> getByStatus(Status status);
 
     void delete(Long id);
 

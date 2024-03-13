@@ -1,6 +1,8 @@
 package getdressed.services.impl;
 
 import getdressed.domain.Order;
+import getdressed.domain.Order;
+import getdressed.domain.enums.Status;
 import getdressed.repositories.OrderRepository;
 import getdressed.services.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +24,17 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order update(Order order, Long id) {
-        return orderRepository.save(order);
+        Order existingOrder = orderRepository.getOrderById(id).orElse(null);
+        if (existingOrder != null){
+            existingOrder.setFullName(order.getFullName());
+            existingOrder.setEmail(order.getEmail());
+            existingOrder.setPhone(order.getPhone());
+            existingOrder.setZipcode(order.getZipcode());
+            existingOrder.setStatus(order.getStatus());
+            return orderRepository.save(order);
+        }
+        return null;
+
     }
 
     @Override
@@ -31,13 +43,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Optional<List<Order>> getByEmail(String email) {
-        return orderRepository.getOrderByEmail(email);
+    public Optional<List<Order>> getByFullNameOrZipcodeOrPhoneOrEmail(String searchTerm) {
+        List<Order> orders = orderRepository.findByFullNameOrZipcodeOrPhoneOrEmail(searchTerm).orElse(null);
+        return Optional.ofNullable(orders);
     }
 
     @Override
-    public Optional<List<Order>> getByPhone(String phone) {
-        return orderRepository.getOrderByPhone(phone);
+    public Optional<List<Order>> getByStatus(Status status) {
+        return orderRepository.findAllByStatus(status);
     }
 
     @Override

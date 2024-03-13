@@ -7,7 +7,7 @@ public record OrderResponseDTO(
         String fullName,
         String email,
         String phone,
-        Integer zipcode,
+        String zipcode,
         Status status
 ) {
     public static OrderResponseDTO fromOrder(Order order){
