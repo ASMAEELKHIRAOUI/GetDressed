@@ -8,16 +8,14 @@ public record OrderRequestDTO(
         String fullName,
         String email,
         String phone,
-        String zipcode,
-        Status status
+        String zipcode
 ) {
     public Order toOrder(){
         Order.OrderBuilder orderBuilder = new Order().builder()
                 .fullName(fullName)
                 .email(email)
                 .phone(phone)
-                .zipcode(zipcode)
-                .status(status);
+                .zipcode(zipcode);
         return orderBuilder.build();
     }
 }

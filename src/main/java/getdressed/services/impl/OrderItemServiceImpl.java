@@ -3,7 +3,9 @@ package getdressed.services.impl;
 import getdressed.domain.Order;
 import getdressed.domain.OrderItem;
 import getdressed.repositories.OrderItemRepository;
+import getdressed.repositories.OrderRepository;
 import getdressed.services.OrderItemService;
+import getdressed.services.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import java.util.Optional;
 public class OrderItemServiceImpl implements OrderItemService {
 
     private final OrderItemRepository orderItemRepository;
+    private final OrderRepository orderRepository;
 
     @Override
     public OrderItem save(OrderItem orderItem) {
@@ -32,8 +35,8 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public Optional<List<OrderItem>> getByOrder(Order order) {
-        return orderItemRepository.findAllByOrder(order);
+    public Optional<List<OrderItem>> getByOrder(Long order) {
+        return orderItemRepository.findAllByOrder(orderRepository.getOrderById(order).orElse(null));
     }
 
     @Override

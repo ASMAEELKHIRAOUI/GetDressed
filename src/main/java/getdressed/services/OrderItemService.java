@@ -17,7 +17,7 @@ public interface OrderItemService {
 
     Optional<OrderItem> getById(Long id);
 
-    Optional<List<OrderItem>> getByOrder(Order order);
+    Optional<List<OrderItem>> getByOrder(Long order);
 
     void delete(Long id);
 

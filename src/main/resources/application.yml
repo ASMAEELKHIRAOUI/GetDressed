@@ -7,7 +7,8 @@ server:
 
 # Spring Configuration
 spring:
-
+  main:
+    allow-circular-references: true
   #to enable colors when you run your app outside intellij
   output:
     ansi:

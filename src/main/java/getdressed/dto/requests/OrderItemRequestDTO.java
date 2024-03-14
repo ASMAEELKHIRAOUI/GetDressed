@@ -5,7 +5,7 @@ import getdressed.domain.Order;
 import getdressed.domain.Product;
 
 public record OrderItemRequestDTO(
-        Integer total,
+        Double total,
         Integer quantity,
         Long product,
         Long order

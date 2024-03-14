@@ -5,7 +5,7 @@ import getdressed.domain.Order;
 import getdressed.domain.Product;
 
 public record OrderItemResponseDTO(
-        Integer total,
+        Double total,
         Integer quantity,
         Order order,
         Product product
