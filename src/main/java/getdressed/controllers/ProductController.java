@@ -5,6 +5,7 @@ import getdressed.domain.Product;
 import getdressed.dto.requests.ProductRequestDTO;
 import getdressed.dto.responses.ProductResponseDTO;
 import getdressed.dto.responses.ProductResponseDTO;
+import getdressed.handler.response.ResponseMessage;
 import getdressed.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,24 +22,24 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductResponseDTO>> getAll(){
+    public ResponseEntity getAll(){
         List<Product> products = productService.getAll();
-        if (products.isEmpty()) return ResponseEntity.badRequest().build();
-        else return new ResponseEntity<>(products.stream().map(ProductResponseDTO::fromProduct).toList(), HttpStatus.OK);
+        if (products.isEmpty()) return ResponseMessage.notFound("No product was found");
+        else return ResponseMessage.ok("Success", products.stream().map(ProductResponseDTO::fromProduct).toList());
     }
 
     @PostMapping
     public ResponseEntity<ProductResponseDTO> save(@RequestBody ProductRequestDTO productToSave){
         Product product = productService.save(productToSave.toProduct());
-        if (product == null) return ResponseEntity.badRequest().build();
-        else return new ResponseEntity<>(ProductResponseDTO.fromProduct(product), HttpStatus.OK);
+        if (product == null) return ResponseMessage.badRequest("Bad request");
+        else return ResponseMessage.ok("Success", ProductResponseDTO.fromProduct(product));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> update(@RequestBody ProductRequestDTO requestDTO, @PathVariable Long id){
         Product product = productService.update(requestDTO.toProduct(), id);
-        if (product == null) return ResponseEntity.badRequest().build();
-        else return new ResponseEntity<>(ProductResponseDTO.fromProduct(product), HttpStatus.OK);
+        if (product == null) return ResponseMessage.badRequest("Bad request");
+        else return ResponseMessage.ok("Success", ProductResponseDTO.fromProduct(product));
     }
 
     @DeleteMapping("/{id}")

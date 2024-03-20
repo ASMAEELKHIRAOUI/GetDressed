@@ -26,24 +26,24 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping
-    public ResponseEntity<List<OrderResponseDTO>> getAll(){
+    public ResponseEntity getAll(){
         List<Order> orders = orderService.getAll();
-        if (orders.isEmpty())return ResponseEntity.badRequest().build();
-        else return new ResponseEntity<>(orders.stream().map(OrderResponseDTO::fromOrder).toList(), HttpStatus.OK);
+        if (orders.isEmpty())return ResponseMessage.notFound("No order was found");
+        else return ResponseMessage.ok("Success", orders.stream().map(OrderResponseDTO::fromOrder).toList());
     }
 
     @PostMapping
     public ResponseEntity<OrderResponseDTO> save(@RequestBody OrderRequestDTO orderToSave){
         Order order = orderService.save((orderToSave.toOrder()));
-        if (order == null) return ResponseEntity.badRequest().build();
-        else return new ResponseEntity<>(OrderResponseDTO.fromOrder(order), HttpStatus.OK);
+        if (order == null) return ResponseMessage.badRequest("Bad request");
+        else return ResponseMessage.ok("Success", OrderResponseDTO.fromOrder(order));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<OrderResponseDTO> update(@RequestBody OrderRequestDTO orderToUpdate, @PathVariable Long id){
         Order order = orderService.update(orderToUpdate.toOrder(), id);
-        if (order == null) return ResponseEntity.badRequest().build();
-        else return new ResponseEntity<>(OrderResponseDTO.fromOrder(order), HttpStatus.OK);
+        if (order == null) return ResponseMessage.badRequest("Bad request");
+        else return ResponseMessage.ok("Success", OrderResponseDTO.fromOrder(order));
     }
 
     @DeleteMapping("/{id}")

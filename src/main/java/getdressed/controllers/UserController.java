@@ -4,6 +4,7 @@ import getdressed.domain.Role;
 import getdressed.domain.User;
 import getdressed.dto.requests.RoleRequestDTO;
 import getdressed.dto.responses.UserResponseDTO;
+import getdressed.handler.response.ResponseMessage;
 import getdressed.services.RoleService;
 import getdressed.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,8 @@ public class UserController {
     public ResponseEntity<UserResponseDTO> assignRole(@RequestBody RoleRequestDTO request, @PathVariable Long id){
         Role role = roleService.getByName(request.name()).orElse(null);
         User user = userService.assignRole(id, role);
-        if (user == null && role == null) return ResponseEntity.badRequest().build();
-        else return new ResponseEntity<>(UserResponseDTO.fromUser(user), HttpStatus.OK);
+        if (user == null && role == null) return ResponseMessage.badRequest("Bad request");
+        else return ResponseMessage.ok("Success", UserResponseDTO.fromUser(user));
     }
 
 }

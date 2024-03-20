@@ -4,6 +4,7 @@ import getdressed.domain.Cart;
 import getdressed.dto.requests.CartRequestDTO;
 import getdressed.dto.responses.CartResponseDTO;
 import getdressed.dto.responses.ProductResponseDTO;
+import getdressed.handler.response.ResponseMessage;
 import getdressed.services.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,24 +21,24 @@ public class CartController {
     private final CartService cartService;
 
     @GetMapping
-    public ResponseEntity<List<CartResponseDTO>> getAll(){
+    public ResponseEntity<ResponseMessage> getAll(){
         List<Cart> carts = cartService.getAll();
-        if (carts.isEmpty())return ResponseEntity.badRequest().build();
-        else return new ResponseEntity<>(carts.stream().map(CartResponseDTO::fromCart).toList(), HttpStatus.OK);
+        if (carts.isEmpty())return ResponseMessage.notFound("No item was found");
+        else return ResponseMessage.ok("Success", carts.stream().map(CartResponseDTO::fromCart).toList());
     }
 
     @PostMapping
     public ResponseEntity<CartResponseDTO> save(@RequestBody CartRequestDTO cartToSave){
         Cart cart = cartService.save((cartToSave.toCart()));
-        if (cart == null) return ResponseEntity.badRequest().build();
-        else return new ResponseEntity<>(CartResponseDTO.fromCart(cart), HttpStatus.OK);
+        if (cart == null) return ResponseMessage.badRequest("Bad request");
+        else return ResponseMessage.ok("Success", CartResponseDTO.fromCart(cart));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CartResponseDTO> update(@RequestBody CartRequestDTO cartToUpdate, @PathVariable Long id){
         Cart cart = cartService.update(cartToUpdate.toCart(), id);
-        if (cart == null) return ResponseEntity.badRequest().build();
-        else return new ResponseEntity<>(CartResponseDTO.fromCart(cart), HttpStatus.OK);
+        if (cart == null) return ResponseMessage.badRequest("Bad request");
+        else return ResponseMessage.ok("Success", CartResponseDTO.fromCart(cart));
     }
 
     @DeleteMapping("/{id}")
@@ -47,9 +48,9 @@ public class CartController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<CartResponseDTO>> getAllByUser(@PathVariable Long userId){
+    public ResponseEntity<ResponseMessage> getAllByUser(@PathVariable Long userId){
         List<Cart> carts = cartService.getAllByUser(userId).orElse(null);
-        if (carts.isEmpty())return ResponseEntity.badRequest().build();
-        else return new ResponseEntity<>(carts.stream().map(CartResponseDTO::fromCart).toList(), HttpStatus.OK);
+        if (carts.isEmpty())return ResponseMessage.notFound("No item was found");
+        else return ResponseMessage.ok("Success", carts.stream().map(CartResponseDTO::fromCart).toList());
     }
 }
