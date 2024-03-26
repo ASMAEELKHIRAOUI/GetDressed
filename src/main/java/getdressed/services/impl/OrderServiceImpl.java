@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
             existingOrder.setPhone(order.getPhone());
             existingOrder.setZipcode(order.getZipcode());
             existingOrder.setStatus(order.getStatus());
-            return orderRepository.save(order);
+            return orderRepository.save(existingOrder);
         }
         return null;
     }

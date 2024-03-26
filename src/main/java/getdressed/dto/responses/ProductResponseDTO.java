@@ -3,6 +3,7 @@ package getdressed.dto.responses;
 import getdressed.domain.Product;
 
 public record ProductResponseDTO(
+        Long id,
         String name,
         String description,
         Double price,
@@ -13,6 +14,7 @@ public record ProductResponseDTO(
 ) {
     public static ProductResponseDTO fromProduct(Product product){
         return new ProductResponseDTO(
+                product.getId(),
                 product.getName(),
                 product.getDescription(),
                 product.getPrice(),
