@@ -21,7 +21,7 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping
+    @GetMapping("/get")
     public ResponseEntity getAll(){
         List<Product> products = productService.getAll();
         if (products.isEmpty()) return ResponseMessage.notFound("No product was found");

@@ -6,6 +6,7 @@ import getdressed.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,5 +18,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Optional<Category> getByName(String name) {
         return categoryRepository.findByName(name);
+    }
+
+    @Override
+    public List<Category> getAll() {
+        return categoryRepository.findAll();
     }
 }
