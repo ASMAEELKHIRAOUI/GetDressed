@@ -4,6 +4,7 @@ import getdressed.domain.Order;
 import getdressed.domain.enums.Status;
 
 public record OrderResponseDTO(
+        Long id,
         String fullName,
         String email,
         String phone,
@@ -12,6 +13,7 @@ public record OrderResponseDTO(
 ) {
     public static OrderResponseDTO fromOrder(Order order){
         return new OrderResponseDTO(
+                order.getId(),
                 order.getFullName(),
                 order.getEmail(),
                 order.getPhone(),

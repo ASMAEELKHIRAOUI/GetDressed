@@ -28,6 +28,13 @@ public class ProductController {
         else return ResponseMessage.ok("Success", products.stream().map(ProductResponseDTO::fromProduct).toList());
     }
 
+    @GetMapping("/get/{id}")
+    public ResponseEntity getById(@PathVariable Long id){
+        Product product = productService.getById(id).orElse(null);
+        if (product == null) return ResponseMessage.badRequest("Product not found");
+        else return ResponseMessage.ok("Success", ProductResponseDTO.fromProduct(product));
+    }
+
     @PostMapping
     public ResponseEntity<ProductResponseDTO> save(@RequestBody ProductRequestDTO productToSave){
         Product product = productService.save(productToSave.toProduct());

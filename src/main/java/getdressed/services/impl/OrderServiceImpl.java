@@ -3,12 +3,10 @@ package getdressed.services.impl;
 import getdressed.domain.Cart;
 import getdressed.domain.Order;
 import getdressed.domain.OrderItem;
+import getdressed.domain.Product;
 import getdressed.domain.enums.Status;
 import getdressed.repositories.OrderRepository;
-import getdressed.services.CartService;
-import getdressed.services.OrderItemService;
-import getdressed.services.OrderService;
-import getdressed.services.UserService;
+import getdressed.services.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -24,6 +22,7 @@ public class OrderServiceImpl implements OrderService {
     private final CartService cartService;
     private final OrderItemService orderItemService;
     private final UserService userService;
+    private final ProductService productService;
 
     @Override
     public Order save(Order order) {
@@ -39,6 +38,15 @@ public class OrderServiceImpl implements OrderService {
                 orderItem.setTotal(total);
                 orderItem.setOrder(orderToSave);
                 orderItemService.save(orderItem);
+                Product product = new Product().builder()
+                        .stock(cart.getProduct().getStock() - cart.getQuantity())
+                        .name(cart.getProduct().getName())
+                        .description(cart.getProduct().getDescription())
+                        .price(cart.getProduct().getPrice())
+                        .promotion(cart.getProduct().getPromotion())
+                        .category(cart.getProduct().getCategory())
+                        .build();
+                productService.update(product, cart.getProduct().getId());
                 cartService.delete(cart.getId());
             }
         }
@@ -53,6 +61,7 @@ public class OrderServiceImpl implements OrderService {
             existingOrder.setEmail(order.getEmail());
             existingOrder.setPhone(order.getPhone());
             existingOrder.setZipcode(order.getZipcode());
+            existingOrder.setAddress(order.getAddress());
             existingOrder.setStatus(order.getStatus());
             return orderRepository.save(existingOrder);
         }

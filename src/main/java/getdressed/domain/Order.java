@@ -25,6 +25,8 @@ public class Order {
 
     private String zipcode;
 
+    private String address;
+
     @Enumerated(EnumType.STRING)
     private Status status;
 
