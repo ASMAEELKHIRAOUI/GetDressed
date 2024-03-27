@@ -8,6 +8,7 @@ public record OrderResponseDTO(
         String fullName,
         String email,
         String phone,
+        String address,
         String zipcode,
         Status status
 ) {
@@ -17,6 +18,7 @@ public record OrderResponseDTO(
                 order.getFullName(),
                 order.getEmail(),
                 order.getPhone(),
+                order.getAddress(),
                 order.getZipcode(),
                 order.getStatus()
         );

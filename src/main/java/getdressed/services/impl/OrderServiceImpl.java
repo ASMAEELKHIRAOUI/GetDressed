@@ -60,6 +60,7 @@ public class OrderServiceImpl implements OrderService {
             existingOrder.setFullName(order.getFullName());
             existingOrder.setEmail(order.getEmail());
             existingOrder.setPhone(order.getPhone());
+            existingOrder.setAddress(order.getAddress());
             existingOrder.setZipcode(order.getZipcode());
             existingOrder.setAddress(order.getAddress());
             existingOrder.setStatus(order.getStatus());

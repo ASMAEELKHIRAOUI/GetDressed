@@ -59,6 +59,13 @@ public class OrderController {
         else return ResponseMessage.ok("Success", orders.stream().map(OrderResponseDTO::fromOrder).toList());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity getById(@PathVariable Long id){
+        Order order = orderService.getById(id).orElse(null);
+        if (order == null) return ResponseMessage.notFound("No order was found");
+        else return ResponseMessage.ok("Success", OrderResponseDTO.fromOrder(order));
+    }
+
     @GetMapping("/status/{status}")
     public ResponseEntity getByStatus(@PathVariable Status status){
         List<Order> orders = orderService.getByStatus(status).orElse(null);
