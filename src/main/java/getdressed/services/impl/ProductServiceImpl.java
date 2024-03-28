@@ -1,5 +1,6 @@
 package getdressed.services.impl;
 
+import getdressed.domain.Category;
 import getdressed.domain.Product;
 import getdressed.repositories.ProductRepository;
 import getdressed.services.CategoryService;
@@ -47,6 +48,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Optional<List<Product>> getByName(String name) {
         return productRepository.findAllByName(name);
+    }
+
+    @Override
+    public Optional<List<Product>> getByCategory(String name) {
+        Category category = categoryService.getByName(name).orElse(null);
+        if (category != null){
+            return productRepository.getProductByCategory(category);
+        }
+        return Optional.empty();
     }
 
     @Override

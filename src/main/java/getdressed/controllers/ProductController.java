@@ -35,6 +35,13 @@ public class ProductController {
         else return ResponseMessage.ok("Success", ProductResponseDTO.fromProduct(product));
     }
 
+    @GetMapping("/get/category/{category}")
+    public ResponseEntity getByCategory(@PathVariable String category){
+        List<Product> products = productService.getByCategory(category).orElse(null);
+        if (products.isEmpty()) return ResponseMessage.badRequest("No product was found");
+        else return ResponseMessage.ok("Success", products.stream().map(ProductResponseDTO::fromProduct).toList());
+    }
+
     @PostMapping
     public ResponseEntity<ProductResponseDTO> save(@RequestBody ProductRequestDTO productToSave){
         Product product = productService.save(productToSave.toProduct());

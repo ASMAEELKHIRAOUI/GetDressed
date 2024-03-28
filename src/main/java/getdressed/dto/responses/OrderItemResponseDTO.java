@@ -8,14 +8,14 @@ public record OrderItemResponseDTO(
         Double total,
         Integer quantity,
         Order order,
-        Product product
+        ProductResponseDTO product
 ) {
     public static OrderItemResponseDTO fromOrderItem(OrderItem orderItem){
         return new OrderItemResponseDTO(
                 orderItem.getTotal(),
                 orderItem.getQuantity(),
                 orderItem.getOrder(),
-                orderItem.getProduct()
+                ProductResponseDTO.fromProduct(orderItem.getProduct())
         );
     }
 }

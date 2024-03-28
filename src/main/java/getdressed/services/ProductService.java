@@ -17,6 +17,8 @@ public interface ProductService {
 
     Optional<List<Product>> getByName(String name);
 
+    Optional<List<Product>> getByCategory(String name);
+
     void delete(Long id);
 
     List<Product> getAll();
