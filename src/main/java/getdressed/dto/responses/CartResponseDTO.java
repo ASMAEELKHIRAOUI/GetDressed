@@ -6,13 +6,13 @@ import getdressed.domain.User;
 
 public record CartResponseDTO(
         Integer quantity,
-        Product product,
+        ProductResponseDTO product,
         User user
 ) {
     public static CartResponseDTO fromCart(Cart cart){
         return new CartResponseDTO(
                 cart.getQuantity(),
-                cart.getProduct(),
+                ProductResponseDTO.fromProduct(cart.getProduct()),
                 cart.getUser()
         );
     }
