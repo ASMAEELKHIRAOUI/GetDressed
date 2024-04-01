@@ -27,6 +27,9 @@ public class Order {
 
     private String address;
 
+    @ManyToOne
+    private User user;
+
     @Enumerated(EnumType.STRING)
     private Status status;
 

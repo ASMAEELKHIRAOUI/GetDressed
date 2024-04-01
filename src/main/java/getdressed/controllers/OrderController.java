@@ -72,4 +72,11 @@ public class OrderController {
         if (orders.isEmpty())return ResponseMessage.notFound("No order was found");
         else return ResponseMessage.ok("Success", orders.stream().map(OrderResponseDTO::fromOrder).toList());
     }
+
+    @GetMapping("/user")
+    public ResponseEntity getByStatus(){
+        List<Order> orders = orderService.getAllByUser();
+        if (orders.isEmpty())return ResponseMessage.notFound("No order was found");
+        else return ResponseMessage.ok("Success", orders.stream().map(OrderResponseDTO::fromOrder).toList());
+    }
 }

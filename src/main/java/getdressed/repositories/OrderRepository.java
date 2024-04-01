@@ -1,6 +1,7 @@
 package getdressed.repositories;
 
 import getdressed.domain.Order;
+import getdressed.domain.User;
 import getdressed.domain.enums.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,5 +23,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<List<Order>> findByFullNameOrZipcodeOrPhoneOrEmail(String searchTerm);
 
     Optional<List<Order>> findAllByStatus(Status status);
+
+    Optional<List<Order>> getOrderByUser(User user);
 
 }

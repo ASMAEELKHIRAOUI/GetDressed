@@ -1,6 +1,7 @@
 package getdressed.services;
 
 import getdressed.domain.Order;
+import getdressed.domain.User;
 import getdressed.domain.enums.Status;
 import org.springframework.stereotype.Component;
 
@@ -22,4 +23,6 @@ public interface OrderService {
     void delete(Long id);
 
     List<Order> getAll();
+
+    List<Order> getAllByUser();
 }

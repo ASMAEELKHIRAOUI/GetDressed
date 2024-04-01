@@ -1,9 +1,6 @@
 package getdressed.services.impl;
 
-import getdressed.domain.Cart;
-import getdressed.domain.Order;
-import getdressed.domain.OrderItem;
-import getdressed.domain.Product;
+import getdressed.domain.*;
 import getdressed.domain.enums.Status;
 import getdressed.repositories.OrderRepository;
 import getdressed.services.*;
@@ -27,6 +24,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order save(Order order) {
         order.setStatus(Status.PENDING);
+        order.setUser(userService.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null));
         Order orderToSave = orderRepository.save(order);
         List<Cart> carts = cartService.getAllByUser(userService.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null).getId()).orElse(null);
         if (carts != null){
@@ -93,5 +91,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getAll() {
         return orderRepository.findAll();
+    }
+
+    @Override
+    public List<Order> getAllByUser() {
+        return orderRepository.getOrderByUser(userService.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null)).orElse(null);
     }
 }
