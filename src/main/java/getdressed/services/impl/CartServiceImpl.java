@@ -23,9 +23,16 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart save(Cart cart) {
-        cart.setUser(userService.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null));
-        cart.setProduct(productService.getById(cart.getProduct().getId()).orElse(null));
-        return cartRepository.save(cart);
+        Cart existingCart = cartRepository.getCartByUserAndProduct(userService.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null),productService.getById(cart.getProduct().getId()).orElse(null)).orElse(null);
+        if (existingCart != null){
+            existingCart.setQuantity(existingCart.getQuantity()+cart.getQuantity());
+            return cartRepository.save(existingCart);
+        }
+        else {
+            cart.setUser(userService.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null));
+            cart.setProduct(productService.getById(cart.getProduct().getId()).orElse(null));
+            return cartRepository.save(cart);
+        }
     }
 
     @Override
