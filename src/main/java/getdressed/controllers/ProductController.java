@@ -28,6 +28,13 @@ public class ProductController {
         else return ResponseMessage.ok("Success", products.stream().map(ProductResponseDTO::fromProduct).toList());
     }
 
+    @GetMapping("/search/{search}")
+    public ResponseEntity search(@PathVariable String search){
+        List<Product> products = productService.search(search);
+        if (products.isEmpty()) return ResponseMessage.notFound("No product was found");
+        else return ResponseMessage.ok("Success", products.stream().map(ProductResponseDTO::fromProduct).toList());
+    }
+
     @GetMapping("/get/{id}")
     public ResponseEntity getById(@PathVariable Long id){
         Product product = productService.getById(id).orElse(null);
