@@ -74,7 +74,7 @@ public class OrderController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity getByStatus(){
+    public ResponseEntity getByUser(){
         List<Order> orders = orderService.getAllByUser();
         if (orders.isEmpty())return ResponseMessage.notFound("No order was found");
         else return ResponseMessage.ok("Success", orders.stream().map(OrderResponseDTO::fromOrder).toList());

@@ -3,6 +3,7 @@ package getdressed.controllers;
 import getdressed.domain.Role;
 import getdressed.domain.User;
 import getdressed.dto.requests.RoleRequestDTO;
+import getdressed.dto.requests.UserRequestDTO;
 import getdressed.dto.responses.UserResponseDTO;
 import getdressed.handler.response.ResponseMessage;
 import getdressed.services.RoleService;
@@ -25,6 +26,13 @@ public class UserController {
         Role role = roleService.getByName(request.name()).orElse(null);
         User user = userService.assignRole(id, role);
         if (user == null && role == null) return ResponseMessage.badRequest("Bad request");
+        else return ResponseMessage.ok("Success", UserResponseDTO.fromUser(user));
+    }
+
+    @PutMapping
+    public ResponseEntity<UserResponseDTO> update(@RequestBody UserRequestDTO request){
+        User user = userService.update(request.toUser());
+        if (user == null) return ResponseMessage.badRequest("Bad request");
         else return ResponseMessage.ok("Success", UserResponseDTO.fromUser(user));
     }
 

@@ -18,7 +18,7 @@ public interface UserService {
 
     User assignRole(Long id, Role role);
 
-    User update(User user, Long id);
+    User update(User user);
 
     void delete(Long id);
 

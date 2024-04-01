@@ -49,17 +49,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(User user, Long id) {
-        List<String> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
-        if (authorities.contains("UPDATE_USERS") || SecurityContextHolder.getContext().getAuthentication().getName().equals(user.getEmail())){
-            User existingUser = getById(id).orElse(null);
+    public User update(User user) {
+            User existingUser = getByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null);
             if (existingUser != null){
                 existingUser.setEmail(user.getEmail());
                 existingUser.setFirstName(user.getFirstName());
                 existingUser.setLastName(user.getLastName());
-                return userRepository.save(user);
-            }
-            return null;
+                return userRepository.save(existingUser);
         }return null;
     }
 
